@@ -1,0 +1,43 @@
+
+Model compression:
+
+	1. Pruning
+
+		Remove connections that do not improve the model, i.e., we remove both the connection between neurons, and the neurons themselves
+
+	2. Knowledge distillation
+
+		Train a smaller (student) model using the original (instructor) model. Can be quite costly because we want to capture as much information as possible in the student model
+
+	3. Quantization
+
+		Store the parameters of the model in a lower precision. We reduce the total size (memory footprint) of the model by a factor of 4 or 8 depending on the degree of quantization. It is pretty quick to do as well! Only challenge is we must ensure that we do not have too much of quantization error
+
+Data types
+
+	Representational power: FP32 > FP16 > BF16
+
+Quantization theory
+
+	1. Linear quantization
+
+		Scale - Max value - min value in the input tensor
+
+		Zero point - Min value in the input tensor
+
+		For every element you can now do: ((x - zero_point) / scale)
+
+		To recover: ((new_x * scale) + zero_point)
+
+		Therefore the error is basically whatever is lost due to truncation by 'scale' parameter
+
+		This type of quantization is also called "Post-training" quantization (PTQ). There are other types of quantizations which are of different category.
+
+Note: Sometimes after quantization is done we might have to run inference on our dataset and optimize our quantized parameters further to ensure there is not too much quantization error. For linear quantization this is not required, but it is required for more advanced versions.
+
+PEFT (Parameter efficient fine-tuning)
+
+	Significantly reduce the number of trainable parameters of a model while keeping the same performance as full fine-tuning.
+
+	QLoRA quantizes the pre-trained base weights in 4-bit precision, and this matches the precision of LoRA (low rank adapter weights). Since both are of the same quantized level their activations can be mathematically added and fed to next layers in the network.
+
