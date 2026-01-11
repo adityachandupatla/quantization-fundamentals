@@ -41,3 +41,14 @@ PEFT (Parameter efficient fine-tuning)
 
 	QLoRA quantizes the pre-trained base weights in 4-bit precision, and this matches the precision of LoRA (low rank adapter weights). Since both are of the same quantized level their activations can be mathematically added and fed to next layers in the network.
 
+	Note: PEFT (Parameter-Efficient Fine-Tuning) is a broader category, and LoRA is one specific technique within it.
+
+	PEFT (umbrella term)
+	├── LoRA (Low-Rank Adaptation)
+	├── QLoRA (Quantized LoRA)
+	├── Adapters
+	├── Prefix Tuning
+	├── Prompt Tuning
+	├── IA3
+	└── ... other methods
+
